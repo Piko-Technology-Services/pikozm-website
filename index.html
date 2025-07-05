@@ -289,8 +289,8 @@
                         <!-- Service 7 -->
                         <div class="portfolio-thumb mb-5" data-aos="fade-up">
                             <a href="images/portfolio/business-consultancy.jpg" class="image-popup">
-                                <img src="images/portfolio/tyler-nix-Y1drF0Y3Oe0-unsplash.jpeg"
-                                    class="img-fluid portfolio-image" alt="">
+                                <img src="images/portfolio/business-consultancy.jpg" class="img-fluid portfolio-image"
+                                    alt="">
                             </a>
                             <div class="portfolio-info">
                                 <h4 class="portfolio-title mb-0">Business Consultancy</h4>
@@ -302,8 +302,8 @@
                         <!-- Service 8 -->
                         <div class="portfolio-thumb mb-5" data-aos="fade-up">
                             <a href="images/portfolio/large-format-printing.jpg" class="image-popup">
-                                <img src="images/portfolio/large-format-printing.jpg"
-                                    class="img-fluid portfolio-image" alt="">
+                                <img src="images/portfolio/large-format-printing.jpg" class="img-fluid portfolio-image"
+                                    alt="">
                             </a>
                             <div class="portfolio-info">
                                 <h4 class="portfolio-title mb-0">Large Format Printing</h4>
@@ -315,8 +315,8 @@
                         <!-- Service 9 -->
                         <div class="portfolio-thumb mb-5" data-aos="fade-up">
                             <a href="images/portfolio/computer-training.jpg" class="image-popup">
-                                <img src="images/portfolio/computer-training.jpg"
-                                    class="img-fluid portfolio-image" alt="">
+                                <img src="images/portfolio/computer-training.jpg" class="img-fluid portfolio-image"
+                                    alt="">
                             </a>
                             <div class="portfolio-info">
                                 <h4 class="portfolio-title mb-0">Computer Science Training</h4>
@@ -328,8 +328,8 @@
                         <!-- Service 10 -->
                         <div class="portfolio-thumb mb-5" data-aos="fade-up">
                             <a href="images/portfolio/bespoke-software-dev.jpg" class="image-popup">
-                                <img src="images/portfolio/bespoke-software-dev.jpg"
-                                    class="img-fluid portfolio-image" alt="">
+                                <img src="images/portfolio/bespoke-software-dev.jpg" class="img-fluid portfolio-image"
+                                    alt="">
                             </a>
                             <div class="portfolio-info">
                                 <h4 class="portfolio-title mb-0">Bespoke Software Development</h4>
@@ -346,12 +346,11 @@
                     <!-- Next Column -->
                     <div class="col-lg-6 col-12">
 
-
                         <!-- Service 3 -->
                         <div class="portfolio-thumb mb-5" data-aos="fade-up">
                             <a href="images/portfolio/graphics-design.jpg" class="image-popup">
-                                <img src="images/portfolio/graphics-design.jpg"
-                                    class="img-fluid portfolio-image" alt="">
+                                <img src="images/portfolio/graphics-design.jpg" class="img-fluid portfolio-image"
+                                    alt="">
                             </a>
                             <div class="portfolio-info">
                                 <h4 class="portfolio-title mb-0">Graphics & Motion Design</h4>
@@ -363,8 +362,7 @@
                         <!-- Service 4 -->
                         <div class="portfolio-thumb mb-5" data-aos="fade-up">
                             <a href="images/portfolio/web-design.jpg" class="image-popup">
-                                <img src="images/portfolio/web-design.jpg"
-                                    class="img-fluid portfolio-image" alt="">
+                                <img src="images/portfolio/web-design.jpg" class="img-fluid portfolio-image" alt="">
                             </a>
                             <div class="portfolio-info">
                                 <h4 class="portfolio-title mb-0">Web Development & Design</h4>
@@ -378,8 +376,8 @@
                         <!-- Service 2 -->
                         <div class="portfolio-thumb mb-5" data-aos="fade-up">
                             <a href="images/portfolio/accounting-software.jpg" class="image-popup">
-                                <img src="images/portfolio/accounting-software.jpg"
-                                    class="img-fluid portfolio-image" alt="">
+                                <img src="images/portfolio/accounting-software.jpg" class="img-fluid portfolio-image"
+                                    alt="">
                             </a>
                             <div class="portfolio-info">
                                 <h4 class="portfolio-title mb-0">Accounting Software Solutions</h4>
@@ -390,8 +388,7 @@
 
                         <div class="portfolio-thumb mb-5" data-aos="fade-up">
                             <a href="images/portfolio/business-dev.jpg" class="image-popup">
-                                <img src="images/portfolio/business-dev.jpg"
-                                    class="img-fluid portfolio-image" alt="">
+                                <img src="images/portfolio/business-dev.jpg" class="img-fluid portfolio-image" alt="">
                             </a>
                             <div class="portfolio-info">
                                 <h4 class="portfolio-title mb-0">Business Development</h4>
@@ -417,7 +414,8 @@
 
                         <h2 class="mb-4 text-center" data-aos="fade-up">Don't be shy, get in touch</h2>
 
-                        <form action="#" method="post" class="contact-form" role="form" data-aos="fade-up">
+                        <form id="whatsappForm" class="contact-form" role="form" data-aos="fade-up"
+                            onsubmit="sendToWhatsApp(event)">
 
                             <div class="row">
                                 <div class="col-lg-6 col-6">
@@ -511,11 +509,41 @@
                                 </div>
 
                                 <div class="col-lg-5 col-12 mx-auto mt-5">
-                                    <button type="submit" class="form-control">Send Message</button>
+                                    <button type="submit" class="form-control">Send via WhatsApp</button>
                                 </div>
                             </div>
 
                         </form>
+
+                        <script>
+                            function sendToWhatsApp(event) {
+                                event.preventDefault(); // Prevent default form submission
+
+                                const name = document.getElementById('name').value.trim();
+                                const email = document.getElementById('email').value.trim();
+                                const message = document.getElementById('message').value.trim();
+
+                                // Get selected services
+                                const services = [];
+                                document.querySelectorAll('input[name="services[]"]:checked').forEach(cb => {
+                                    services.push(cb.value);
+                                });
+
+                                // Compose WhatsApp message
+                                let whatsappMessage = `Hello, my name is ${name}.\n\n`;
+                                whatsappMessage += `Email: ${email}\n\n`;
+                                whatsappMessage += `I'm interested in the following services:\n- ${services.join('\n- ')}\n\n`;
+                                whatsappMessage += `Message:\n${message}`;
+
+                                // Encode message and open WhatsApp link
+                                const phoneNumber = '260962893773';
+                                const encodedMessage = encodeURIComponent(whatsappMessage);
+                                const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+                                window.open(whatsappURL, '_blank');
+                            }
+                        </script>
+
                     </div>
 
                 </div>
