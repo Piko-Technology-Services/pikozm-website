@@ -395,7 +395,7 @@
                           class="bi bi-person-lines-fill display-4 mb-3 text-primary"
                           style="color: #adb5bd"
                         ></i>
-                        <h6 class="fw-bold text-primary">Volunteer</h6>
+                        <h6 class="fw-bold text-primary">Be Part of the Team</h6>
                         <p class="small text-muted">
                           Join our team and contribute your skills to help NGOs
                           and communities digitally.
@@ -599,66 +599,140 @@
                 aria-labelledby="partnerModalLabel"
                 aria-hidden="true"
               >
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="partnerModalLabel">
-                        Partner with Piko Digital Impact
-                      </h5>
-                      <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      ></button>
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                  <div class="modal-content shadow-lg">
+                  <div class="modal-header bg-primary">
+                    <h5 class="modal-title text-light" id="partnerModalLabel">
+                    Partner with Piko Digital Impact
+                    </h5>
+                    <button
+                    type="button"
+                    class="btn-close text-light"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body p-4">
+                    <p class="mb-4 text-muted fs-6">
+                    Join us as a partner to drive digital transformation for social good. We welcome CSR, project funding, resource support, and other partnership models.
+                    </p>
+                    <form id="partnerForm">
+                    <!-- Row: Name + Email -->
+                    <div class="row g-3 mb-3">
+                      <div class="col-md-6">
+                      <div class="input-group">
+                        <span class="input-group-text bg-white">
+                        <i class="bi bi-person-fill"></i>
+                        </span>
+                        <input
+                        type="text"
+                        class="form-control"
+                        id="partnerName"
+                        placeholder="Organization / Full Name"
+                        required
+                        />
+                      </div>
+                      </div>
+                      <div class="col-md-6">
+                      <div class="input-group">
+                        <span class="input-group-text bg-white">
+                        <i class="bi bi-envelope-fill"></i>
+                        </span>
+                        <input
+                        type="email"
+                        class="form-control"
+                        id="partnerEmail"
+                        placeholder="Email Address"
+                        required
+                        />
+                      </div>
+                      </div>
                     </div>
-                    <div class="modal-body">
-                      <form id="partnerForm">
-                        <div class="mb-3">
-                          <label for="partnerName" class="form-label"
-                            >Organization / Full Name</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="partnerName"
-                            required
-                          />
-                        </div>
-                        <div class="mb-3">
-                          <label for="partnerEmail" class="form-label"
-                            >Email</label
-                          >
-                          <input
-                            type="email"
-                            class="form-control"
-                            id="partnerEmail"
-                            required
-                          />
-                        </div>
-                        <div class="mb-3">
-                          <label for="partnerType" class="form-label"
-                            >Partnership Type</label
-                          >
-                          <select class="form-select" id="partnerType" required>
-                            <option value="">Select</option>
-                            <option value="CSR">CSR Sponsorship</option>
-                            <option value="Project">
-                              Project-Based Funding
-                            </option>
-                            <option value="Long-Term">
-                              Long-Term Partnership
-                            </option>
-                            <option value="Resource">
-                              Infrastructure / Resource Support
-                            </option>
-                          </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">
-                          Submit Partnership
-                        </button>
-                      </form>
+                    <!-- Row: Phone + Country -->
+                    <div class="row g-3 mb-3">
+                      <div class="col-md-6">
+                      <div class="input-group">
+                        <span class="input-group-text bg-white">
+                        <i class="bi bi-telephone-fill"></i>
+                        </span>
+                        <input
+                        type="tel"
+                        class="form-control"
+                        id="partnerPhone"
+                        placeholder="e.g. +260 123 456 789"
+                        required
+                        />
+                      </div>
+                      </div>
+                      <div class="col-md-6">
+                      <div class="input-group">
+                        <span class="input-group-text bg-white">
+                        <i class="bi bi-geo-alt-fill"></i>
+                        </span>
+                        <input
+                        type="text"
+                        class="form-control"
+                        id="partnerCountry"
+                        placeholder="Country"
+                        required
+                        />
+                      </div>
+                      </div>
                     </div>
+                    <!-- Row: Partnership Type + Org Type -->
+                    <div class="row g-3 mb-3">
+                      <div class="col-md-6">
+                      <div class="input-group">
+                        <span class="input-group-text bg-white">
+                        <i class="bi bi-diagram-3-fill"></i>
+                        </span>
+                        <select class="form-select" id="partnerType" required>
+                        <option value="">Select Partnership Type</option>
+                        <option value="CSR">B2B Partnership</option>
+                        <option value="Project">Project-Based Funding</option>
+                        <option value="Resource">Infrastructure / Resource Support</option>
+                        <option value="Other">Other (General Partnership)</option>
+                        </select>
+                      </div>
+                      </div>
+                      <div class="col-md-6">
+                      <div class="input-group">
+                        <span class="input-group-text bg-white">
+                        <i class="bi bi-building"></i>
+                        </span>
+                        <select class="form-select" id="partnerOrgType" required>
+                        <option value="">Select Organization Type</option>
+                        <option value="Company">Company / Business</option>
+                        <option value="NGO">NGO / Non-Profit</option>
+                        <option value="Government">Government</option>
+                        <option value="Individual">Individual</option>
+                        <option value="Other">Other</option>
+                        </select>
+                      </div>
+                      </div>
+                    </div>
+                    <!-- Message -->
+                    <div class="mb-3">
+                      <div class="input-group">
+                      <span class="input-group-text bg-white">
+                        <i class="bi bi-chat-dots-fill"></i>
+                      </span>
+                      <textarea
+                        class="form-control"
+                        id="partnerMessage"
+                        rows="3"
+                        placeholder="Tell us about your partnership interest, proposal, or any questions."
+                      ></textarea>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 btn-lg">
+                      Submit Partnership
+                    </button>
+                    <p class="small mb-3 text-primary mt-2">
+                      We value every partnership. Our team will review your proposal and get in touch to discuss collaboration opportunities.
+                    </p>
+                    </form>
+                  </div>
                   </div>
                 </div>
               </div>
@@ -671,56 +745,168 @@
                 aria-labelledby="volunteerModalLabel"
                 aria-hidden="true"
               >
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="volunteerModalLabel">
-                        Join as a Volunteer
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                  <div class="modal-content shadow-lg">
+                    <div class="modal-header bg-primary">
+                      <h5 class="modal-title text-light" id="volunteerModalLabel">
+                        Be Part of the Team
                       </h5>
                       <button
                         type="button"
-                        class="btn-close"
+                        class="btn-close text-light"
                         data-bs-dismiss="modal"
                         aria-label="Close"
                       ></button>
                     </div>
-                    <div class="modal-body">
-                      <form id="volunteerForm">
-                        <div class="mb-3">
-                          <label for="volunteerName" class="form-label"
-                            >Full Name</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="volunteerName"
-                            required
-                          />
+                    <div class="modal-body p-4">
+                      <p class="mb-4 text-muted fs-6">
+                        Become part of our mission! Fill in your details to join the Digital Impact volunteer team.
+                      </p>
+                      <form id="volunteerForm" enctype="multipart/form-data">
+                        <!-- Row: Name + Email -->
+                        <div class="row g-3 mb-3">
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <span class="input-group-text bg-white">
+                                <i class="bi bi-person-fill"></i>
+                              </span>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="volunteerName"
+                                placeholder="Full Name"
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <span class="input-group-text bg-white">
+                                <i class="bi bi-envelope-fill"></i>
+                              </span>
+                              <input
+                                type="email"
+                                class="form-control"
+                                id="volunteerEmail"
+                                placeholder="Email Address"
+                                required
+                              />
+                            </div>
+                          </div>
                         </div>
-                        <div class="mb-3">
-                          <label for="volunteerEmail" class="form-label"
-                            >Email</label
-                          >
-                          <input
-                            type="email"
-                            class="form-control"
-                            id="volunteerEmail"
-                            required
-                          />
+                        <!-- Row: Phone + Country -->
+                        <div class="row g-3 mb-3">
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <span class="input-group-text bg-white">
+                                <i class="bi bi-telephone-fill"></i>
+                              </span>
+                              <input
+                                type="tel"
+                                class="form-control"
+                                id="volunteerPhone"
+                                placeholder="e.g. +260 123 456 789"
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <span class="input-group-text bg-white">
+                                <i class="bi bi-geo-alt-fill"></i>
+                              </span>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="volunteerCountry"
+                                placeholder="Country"
+                                required
+                              />
+                            </div>
+                          </div>
                         </div>
-                        <div class="mb-3">
-                          <label for="volunteerSkills" class="form-label"
-                            >Skills / Area of Contribution</label
-                          >
-                          <textarea
-                            class="form-control"
-                            id="volunteerSkills"
-                            rows="3"
-                          ></textarea>
+                        <!-- Row: Skills/Area + Availability -->
+                        <div class="row g-3 mb-3">
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <span class="input-group-text bg-white">
+                                <i class="bi bi-tools"></i>
+                              </span>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="volunteerSkills"
+                                placeholder="Skills / Area of Contribution"
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <span class="input-group-text bg-white">
+                                <i class="bi bi-calendar-event"></i>
+                              </span>
+                              <select
+                                class="form-select"
+                                id="volunteerAvailability"
+                                required
+                              >
+                                <option value="">Select Availability</option>
+                                <option value="remote">Remote Only</option>
+                                <option value="onsite">Onsite Only</option>
+                                <option value="hybrid">Hybrid (Remote & Onsite)</option>
+                                <option value="flexible">Flexible / Open to Any</option>
+                              </select>
+                            </div>
+                          </div>
                         </div>
-                        <button type="submit" class="btn btn-warning w-100">
+                        <!-- Row: NRC Upload + Resume Upload -->
+                        <div class="row g-3 mb-3">
+                          <div class="col-md-6">
+                            <label class="form-label fw-semibold" for="volunteerNRC"
+                              >Upload Passport / National ID (PDF/JPG/PNG)</label
+                            >
+                            <input
+                              class="form-control"
+                              type="file"
+                              id="volunteerNRC"
+                              accept=".pdf,.jpg,.jpeg,.png"
+                              required
+                            />
+                          </div>
+                          <div class="col-md-6">
+                            <label class="form-label fw-semibold" for="volunteerResume"
+                              >Upload Resume/CV (PDF/DOC)</label
+                            >
+                            <input
+                              class="form-control"
+                              type="file"
+                              id="volunteerResume"
+                              accept=".pdf,.doc,.docx"
+                              required
+                            />
+                          </div>
+                        </div>
+                        <!-- Message -->
+                        <div class="mb-3">
+                          <div class="input-group">
+                            <span class="input-group-text bg-white">
+                              <i class="bi bi-chat-dots-fill"></i>
+                            </span>
+                            <textarea
+                              class="form-control"
+                              id="volunteerMessage"
+                              rows="3"
+                              placeholder="Tell us about yourself, your motivation, or any questions."
+                            ></textarea>
+                          </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 btn-lg">
                           Sign Up
                         </button>
+                        <p class="small mb-3 text-primary mt-2">
+                          All information is kept confidential and used only for volunteer onboarding.
+                        </p>
                       </form>
                     </div>
                   </div>
@@ -735,68 +921,168 @@
                 aria-labelledby="supportModalLabel"
                 aria-hidden="true"
               >
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="supportModalLabel">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                  <div class="modal-content shadow-lg">
+                    <div class="modal-header bg-primary">
+                      <h5 class="modal-title text-light" id="supportModalLabel">
                         Apply for Digital Support
                       </h5>
                       <button
                         type="button"
-                        class="btn-close"
+                        class="btn-close text-light"
                         data-bs-dismiss="modal"
                         aria-label="Close"
                       ></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body p-4">
+                      <p class="mb-4 text-muted fs-6">
+                        NGOs, non-profits, and social projects can request digital solutions and technical assistance. Fill in your details and our team will get in touch.
+                      </p>
                       <form id="supportForm">
-                        <div class="mb-3">
-                          <label for="orgName" class="form-label"
-                            >Organization / Project Name</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="orgName"
-                            required
-                          />
+                        <!-- Row: Organization Name + Contact Person -->
+                        <div class="row g-3 mb-3">
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <span class="input-group-text bg-white">
+                                <i class="bi bi-building"></i>
+                              </span>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="orgName"
+                                placeholder="Organization / Project Name"
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <span class="input-group-text bg-white">
+                                <i class="bi bi-person-fill"></i>
+                              </span>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="contactPerson"
+                                placeholder="Contact Person"
+                                required
+                              />
+                            </div>
+                          </div>
                         </div>
-                        <div class="mb-3">
-                          <label for="contactPerson" class="form-label"
-                            >Contact Person</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="contactPerson"
-                            required
-                          />
+                        <!-- Row: Email + Phone -->
+                        <div class="row g-3 mb-3">
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <span class="input-group-text bg-white">
+                                <i class="bi bi-envelope-fill"></i>
+                              </span>
+                              <input
+                                type="email"
+                                class="form-control"
+                                id="supportEmail"
+                                placeholder="Email Address"
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <span class="input-group-text bg-white">
+                                <i class="bi bi-telephone-fill"></i>
+                              </span>
+                              <input
+                                type="tel"
+                                class="form-control"
+                                id="supportPhone"
+                                placeholder="e.g. +260 123 456 789"
+                                required
+                              />
+                            </div>
+                          </div>
                         </div>
-                        <div class="mb-3">
-                          <label for="supportEmail" class="form-label"
-                            >Email</label
-                          >
-                          <input
-                            type="email"
-                            class="form-control"
-                            id="supportEmail"
-                            required
-                          />
+                        <!-- Row: Country + Organization Type -->
+                        <div class="row g-3 mb-3">
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <span class="input-group-text bg-white">
+                                <i class="bi bi-geo-alt-fill"></i>
+                              </span>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="supportCountry"
+                                placeholder="Country"
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <span class="input-group-text bg-white">
+                                <i class="bi bi-diagram-3-fill"></i>
+                              </span>
+                              <select class="form-select" id="supportOrgType" required>
+                                <option value="">Select Organization Type</option>
+                                <option value="NGO">NGO / Non-Profit</option>
+                                <option value="Community">Community Project</option>
+                                <option value="Faith">Faith-based Organization</option>
+                                <option value="Government">Government Initiative</option>
+                                <option value="Other">Other</option>
+                              </select>
+                            </div>
+                          </div>
                         </div>
-                        <div class="mb-3">
-                          <label for="supportNeeds" class="form-label"
-                            >Digital Support Needed</label
-                          >
-                          <textarea
-                            class="form-control"
-                            id="supportNeeds"
-                            rows="3"
-                            placeholder="E.g., Website, Donor Management System, Project Tracking..."
-                          ></textarea>
+                        <!-- Row: Digital Support Needed + Website -->
+                        <div class="row g-3 mb-3">
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <span class="input-group-text bg-white">
+                                <i class="bi bi-laptop"></i>
+                              </span>
+                              <textarea
+                                class="form-control"
+                                id="supportNeeds"
+                                rows="3"
+                                placeholder="Describe the digital support you need (e.g., Website, Donor Management, Training...)"
+                                required
+                              ></textarea>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <span class="input-group-text bg-white">
+                                <i class="bi bi-globe"></i>
+                              </span>
+                              <input
+                                type="url"
+                                class="form-control"
+                                id="supportWebsite"
+                                placeholder="Organization Website (optional)"
+                              />
+                            </div>
+                          </div>
                         </div>
-                        <button type="submit" class="btn btn-info w-100">
+                        <!-- Message -->
+                        <div class="mb-3">
+                          <div class="input-group">
+                            <span class="input-group-text bg-white">
+                              <i class="bi bi-chat-dots-fill"></i>
+                            </span>
+                            <textarea
+                              class="form-control"
+                              id="supportMessage"
+                              rows="3"
+                              placeholder="Additional information, questions, or comments (optional)"
+                            ></textarea>
+                          </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 btn-lg">
                           Apply for Support
                         </button>
+                        <p class="small mb-3 text-primary mt-2">
+                          Our team will review your application and contact you for next steps.
+                        </p>
                       </form>
                     </div>
                   </div>
