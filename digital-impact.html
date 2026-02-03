@@ -1088,6 +1088,8 @@
                   </div>
                 </div>
               </div>
+
+
             </div>
           </div>
         </div>
@@ -1169,7 +1171,7 @@
 
           try {
             const res = await fetch(
-              "http://127.0.0.1:8000/api/support/initiate",
+              "https://api.pikozm.com/api/support/initiate",
               {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -1192,7 +1194,7 @@
               customer: { firstName, lastName },
               onSuccess: function (response) {
                 // Notify backend (fire-and-forget)
-                fetch("http://127.0.0.1:8000/api/support/processing", {
+                fetch("https://api.pikozm.com/api/support/processing", {
                   method: "POST",
                   headers: {
                     "Content-Type": "application/json",
@@ -1248,5 +1250,146 @@
           }
         });
     </script>
+
+<script>
+document.getElementById("volunteerForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const submitBtn = this.querySelector("button[type='submit']");
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Submitting...";
+
+    const formData = new FormData();
+    formData.append("name", document.getElementById("volunteerName").value);
+    formData.append("email", document.getElementById("volunteerEmail").value);
+    formData.append("phone", document.getElementById("volunteerPhone").value);
+    formData.append("country", document.getElementById("volunteerCountry").value);
+    formData.append("skills", document.getElementById("volunteerSkills").value);
+    formData.append("availability", document.getElementById("volunteerAvailability").value);
+    formData.append("message", document.getElementById("volunteerMessage").value);
+    formData.append("nrc", document.getElementById("volunteerNRC").files[0]);
+    formData.append("resume", document.getElementById("volunteerResume").files[0]);
+
+    try {
+        const response = await fetch("https://api.pikozm.com/api/digital-impact/volunteer", {
+            method: "POST",
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw result;
+        }
+
+        Swal.fire({
+            icon: "success",
+            title: "Application Submitted",
+            text: "Thank you for volunteering! Our team will contact you shortly."
+        });
+
+        this.reset();
+        bootstrap.Modal.getInstance(document.getElementById("volunteerModal")).hide();
+
+    } catch (error) {
+        Swal.fire({
+            icon: "error",
+            title: "Submission Failed",
+            text: error.message || "Please check your inputs and try again."
+        });
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Sign Up";
+    }
+});
+</script>
+
+<script>
+document.getElementById("partnerForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const submitBtn = this.querySelector("button[type='submit']");
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Submitting...";
+
+    const payload = {
+        name: document.getElementById("partnerName").value,
+        email: document.getElementById("partnerEmail").value,
+        phone: document.getElementById("partnerPhone").value,
+        country: document.getElementById("partnerCountry").value,
+        partnership_type: document.getElementById("partnerType").value,
+        organization_type: document.getElementById("partnerOrgType").value,
+        message: document.getElementById("partnerMessage").value
+    };
+
+    try {
+        const res = await fetch("https://api.pikozm.com/api/digital-impact/partner", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw data;
+
+        Swal.fire("Submitted", "Your partnership request has been received.", "success");
+        this.reset();
+        bootstrap.Modal.getInstance(document.getElementById("partnerModal")).hide();
+
+    } catch (err) {
+        Swal.fire("Error", err.message || "Submission failed", "error");
+    }
+});
+</script>
+
+
+<script>
+document.getElementById("supportForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const submitBtn = this.querySelector("button[type='submit']");
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Submitting...";
+
+    const payload = {
+        organization_name: document.getElementById("orgName").value,
+        contact_person: document.getElementById("contactPerson").value,
+        email: document.getElementById("supportEmail").value,
+        phone: document.getElementById("supportPhone").value,
+        country: document.getElementById("supportCountry").value,
+        organization_type: document.getElementById("supportOrgType").value,
+        support_needs: document.getElementById("supportNeeds").value,
+        website: document.getElementById("supportWebsite").value,
+        message: document.getElementById("supportMessage").value
+    };
+
+    console.log(payload);
+
+    try {
+        const res = await fetch("https://api.pikozm.com/api/digital-impact/support-request", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+
+
+        const data = await res.json();
+        if (!res.ok) throw data;
+
+        Swal.fire("Success", "Your support request has been sent.", "success");
+        this.reset();
+        bootstrap.Modal.getInstance(document.getElementById("supportModal")).hide();
+
+    } catch (err) {
+        Swal.fire("Error", err.message || "Failed to submit request", "error");
+    }
+});
+</script>
+
+
+
   </body>
 </html>
