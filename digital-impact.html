@@ -632,6 +632,7 @@
                         required
                         />
                       </div>
+                    
                       </div>
                       <div class="col-md-6">
                       <div class="input-group">
@@ -648,6 +649,24 @@
                       </div>
                       </div>
                     </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <span class="input-group-text bg-white">
+                                    <i class="bi bi-person-badge-fill"></i>
+                                </span>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="partnerContactPerson"
+                                    placeholder="Contact Person Fullnames"
+                                    required
+                                />
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Row: Phone + Country -->
                     <div class="row g-3 mb-3">
                       <div class="col-md-6">
@@ -1171,7 +1190,7 @@
 
           try {
             const res = await fetch(
-              "https://api.pikozm.com/api/support/initiate",
+              "http://127.0.0.1:8000/api/support/initiate",
               {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -1194,7 +1213,7 @@
               customer: { firstName, lastName },
               onSuccess: function (response) {
                 // Notify backend (fire-and-forget)
-                fetch("https://api.pikozm.com/api/support/processing", {
+                fetch("http://127.0.0.1:8000/api/support/processing", {
                   method: "POST",
                   headers: {
                     "Content-Type": "application/json",
@@ -1271,7 +1290,7 @@ document.getElementById("volunteerForm").addEventListener("submit", async functi
     formData.append("resume", document.getElementById("volunteerResume").files[0]);
 
     try {
-        const response = await fetch("https://api.pikozm.com/api/digital-impact/volunteer", {
+        const response = await fetch("http://127.0.0.1:8000/api/digital-impact/volunteer", {
             method: "POST",
             body: formData
         });
@@ -1314,6 +1333,7 @@ document.getElementById("partnerForm").addEventListener("submit", async function
 
     const payload = {
         name: document.getElementById("partnerName").value,
+        contact_person: document.getElementById("partnerContactPerson").value,
         email: document.getElementById("partnerEmail").value,
         phone: document.getElementById("partnerPhone").value,
         country: document.getElementById("partnerCountry").value,
@@ -1323,7 +1343,7 @@ document.getElementById("partnerForm").addEventListener("submit", async function
     };
 
     try {
-        const res = await fetch("https://api.pikozm.com/api/digital-impact/partner", {
+        const res = await fetch("http://127.0.0.1:8000/api/digital-impact/partner", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
@@ -1366,7 +1386,7 @@ document.getElementById("supportForm").addEventListener("submit", async function
     console.log(payload);
 
     try {
-        const res = await fetch("https://api.pikozm.com/api/digital-impact/support-request", {
+        const res = await fetch("http://127.0.0.1:8000/api/digital-impact/support-request", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
