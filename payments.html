@@ -340,7 +340,7 @@
 
         try {
           const res = await fetch(
-            "http://localhost:8000/api/payments/initiate",
+            "https://app.pikozm.com/api/payments/initiate",
             {
               method: "POST",
               headers: {
@@ -367,7 +367,7 @@
             customer: { firstName, lastName },
 
             onSuccess: function (response) {
-              fetch("http://localhost:8000/api/payments/processing", {
+              fetch("https://app.pikozm.com/api/payments/processing", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
