@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<title>PikoPay | Secure Digital Payments for Social Impact</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<!-- Primary SEO Meta -->
+<meta
+  name="description"
+  content="PikoPay is a secure digital payment platform by Piko Technology Services, powering transparent payments for  businesses, and digital initiatives across Africa."
+/>
+
+<meta
+  name="keywords"
+  content="PikoPay, Piko Digital Impact Programme, PDIP, secure online payments Africa, social impact payments, digital donations, fintech for NGOs, Zambia fintech, African digital payments"
+/>
+
+<meta name="author" content="Piko Technology Services" />
+<meta name="robots" content="index, follow" />
+
+<!-- Canonical URL -->
+<link rel="canonical" href="https://www.pikozm.com/pikopay" />
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="https://www.pikozm.com/images/cover.png" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:title" content="PikoPay | Secure Payments for Digital & Social Impact" />
+<meta
+  property="og:description"
+  content="Powering transparent, secure payments for NGOs, digital projects, and impact-driven organisations across Africa."
+/>
+<meta property="og:image" content="https://www.pikozm.com/images/cover.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://www.pikozm.com/pikopay" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="PikoPay" />
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta
+  name="twitter:title"
+  content="PikoPay | Secure Payments for Social Impact in Africa"
+/>
+<meta
+  name="twitter:description"
+  content="A secure payment platform supporting NGOs, social initiatives, and digital projects across Africa."
+/>
+<meta
+  name="twitter:image"
+  content="https://www.pikozm.com/images/cover.png"
+/>
+<meta name="twitter:site" content="@pikotechnology" />
+<meta name="twitter:creator" content="@pikotechnology" />
+
+<!-- Theme / Mobile -->
+<meta name="theme-color" content="#03629A" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<!-- Bootstrap -->
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+/>
+
+<!-- Bootstrap Icons -->
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+  rel="stylesheet"
+/>
+
+
+
+<!-- SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+  <style>
+    body {
+      background: #f6f8fb;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont;
+      color: #1f2937;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #03629A, #03629A);
+      color: #fff;
+      padding: 5rem 1rem;
+    }
+
+    .hero h1 {
+      font-weight: 700;
+    }
+
+    .hero p {
+      max-width: 600px;
+      opacity: 0.95;
+    }
+
+    .impact-card {
+      border: none;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .impact-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: rgba(13, 110, 253, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #03629A;
+      font-size: 1.5rem;
+    }
+
+    .cta-btn {
+      padding: 0.9rem 1.4rem;
+      font-size: 1.05rem;
+      border-radius: 12px;
+    }
+
+    footer {
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero text-center">
+    <div class="container">
+      <h1>PikoPay - Secure Payments</h1>
+      <p class="mx-auto mt-3">
+        Secure, transparent, and seamless payments that power real digital impact.
+        Trusted by clients across Africa and beyond.
+      </p>
+      <button
+        class="btn btn-light btn-lg mt-4 cta-btn"
+        data-bs-toggle="modal"
+        data-bs-target="#paymentModal"
+      >
+        Make a Payment
+      </button>
+    </div>
+  </section>
+
+  <!-- VALUE PROPS -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card impact-card h-100 p-4">
+            <div class="impact-icon mb-3">
+              <i class="bi bi-shield-check"></i>
+            </div>
+            <h5>Secure Transactions</h5>
+            <p class="text-muted">
+              Payments are encrypted and securely processed via Lenco.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card impact-card h-100 p-4">
+            <div class="impact-icon mb-3">
+              <i class="bi bi-lightning-charge"></i>
+            </div>
+            <h5>Fast & Reliable</h5>
+            <p class="text-muted">
+              Instant initiation with real-time payment confirmation.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card impact-card h-100 p-4">
+            <div class="impact-icon mb-3">
+              <i class="bi bi-graph-up-arrow"></i>
+            </div>
+            <h5>Built for Impact</h5>
+            <p class="text-muted">
+              Every payment supports sustainable digital solutions.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAYMENT MODAL -->
+  <div
+    class="modal fade"
+    id="paymentModal"
+    tabindex="-1"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content border-0 rounded-4">
+        <div class="modal-header border-0">
+          <h5 class="modal-title">PikoPay - Secure Payment</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+          ></button>
+        </div>
+
+        <div class="modal-body p-4">
+          <form id="clientPaymentForm">
+
+            <!-- Full Name -->
+            <div class="mb-3">
+              <div class="input-group">
+                <span class="input-group-text bg-white">
+                  <i class="bi bi-person-fill"></i>
+                </span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="clientFullName"
+                  placeholder="Client or Company Name"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <div class="input-group">
+                    <span class="input-group-text bg-white">
+                        <i class="bi bi-envelope-fill"></i>
+                    </span>
+                    <input
+                        type="email"
+                        class="form-control"
+                        id="clientEmail"
+                        placeholder="Email Address"
+                        required
+                    />
+                </div>
+            </div>
+
+            <!-- Purpose -->
+            <div class="mb-3">
+              <div class="input-group">
+                <span class="input-group-text bg-white">
+                  <i class="bi bi-journal-text"></i>
+                </span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="paymentPurpose"
+                  placeholder="Purpose of Payment"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- Amount & Currency -->
+            <div class="row g-3 mb-4">
+              <div class="col-md-8">
+                <div class="input-group">
+                  <span class="input-group-text bg-white">
+                    <i class="bi bi-cash-stack"></i>
+                  </span>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="paymentAmount"
+                    placeholder="Amount"
+                    min="1"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <select class="form-select" id="paymentCurrency">
+                  <option value="ZMW">ZMW</option>
+                  <option value="USD" selected>USD</option>
+                </select>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 btn-lg">
+              Proceed to Secure Payment
+            </button>
+
+            <p class="small text-muted text-center mt-3">
+              Powered by Lenco • Safe & Secure
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="py-4 text-center">
+    <small>
+      © <span id="year"></span> Piko Payment Digital Impact. All rights reserved.
+    </small>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="https://pay.lenco.co/js/v1/inline.js"></script>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const clientFullName = document.getElementById("clientFullName");
+    const clientEmail = document.getElementById("clientEmail");
+    const paymentPurpose = document.getElementById("paymentPurpose");
+    const paymentAmount = document.getElementById("paymentAmount");
+    const paymentCurrency = document.getElementById("paymentCurrency");
+
+    document
+      .getElementById("clientPaymentForm")
+      .addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const payload = {
+          full_name: clientFullName.value,
+            email: clientEmail.value,
+          amount: Number(paymentAmount.value),
+          purpose: paymentPurpose.value,
+          currency: paymentCurrency.value,
+        };
+
+        console.log("Initiating payment with payload:", payload);
+
+        try {
+          const res = await fetch(
+            "http://localhost:8000/api/payments/initiate",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              body: JSON.stringify(payload),
+            }
+          );
+
+          const data = await res.json();
+          if (!data.success) throw new Error("Init failed");
+
+          const [firstName, ...last] = payload.full_name.split(" ");
+          const lastName = last.join(" ") || "Client";
+
+          LencoPay.getPaid({
+            key: data.data.public_key,
+            reference: data.data.reference,
+            email: data.data.payment.email,
+            amount: Number(data.data.payment.amount),
+            currency: data.data.payment.currency,
+            channels: ["card", "mobile-money"],
+            customer: { firstName, lastName },
+
+            onSuccess: function (response) {
+              fetch("http://localhost:8000/api/payments/processing", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  reference: response.reference,
+                }),
+              });
+
+              bootstrap.Modal.getInstance(
+                document.getElementById("paymentModal")
+              ).hide();
+
+              document.getElementById("clientPaymentForm").reset();
+
+              // Show confirmation
+                Swal.fire({
+                  icon: "success",
+                  title: "Payment Initiated",
+                  text: "We are confirming your Payment. You will be notified shortly via Email.",
+                  confirmButtonText: "Okay",
+                });
+            },
+
+            onClose: function () {
+              Swal.fire("Payment Cancelled", "", "info");
+            },
+
+            onConfirmationPending: function () {
+              Swal.fire(
+                "Pending Confirmation",
+                "Your payment is awaiting confirmation.",
+                "info"
+              );
+            },
+          });
+        } catch (err) {
+          console.error(err);
+          Swal.fire(
+            "Payment Failed",
+            "Unable to initiate payment. Please try again.",
+            "error"
+          );
+        }
+      });
+  </script>
+</body>
+</html>
