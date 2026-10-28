@@ -7,6 +7,7 @@ use App\Services\DpoPay;
 use App\Support\ZambianPhone;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
@@ -77,12 +78,24 @@ class MobileMoneyController extends ZampayrollController
         $country = config('zampayroll.mobile_country');
 
         $options = $dpo->mobilePaymentOptions($token['token']);
+        $offered = $options === []
+            ? 'DPO returned no mobile options (used built-in names)'
+            : 'DPO offers: '.collect($options)->map(fn ($o) => trim($o['name'].' '.$o['country']))->implode(', ');
+
+        Log::info('ZamPayroll mobile money request', [
+            'reference' => $subscription->reference, 'network' => $data['network'], 'options' => $options,
+        ]);
+
         if ($options !== []) {
             $match = collect($options)->first(fn ($o) => str_contains(strtolower($o['name']), strtolower($network['dpo_name']))
                 && ($o['country'] === '' || str_contains(strtolower($o['country']), $country)));
 
             if (! $match) {
-                return $this->failed($subscription, "{$network['label']} isn’t available for this payment right now. Choose another network or pay by card.");
+                return $this->failed(
+                    $subscription,
+                    "{$network['label']} is not enabled on the DPO account. {$offered}.",
+                    customerMessage: "{$network['label']} isn’t available for this payment right now. Choose another network or pay by card.",
+                );
             }
 
             $mno = $match['name'];
@@ -93,7 +106,23 @@ class MobileMoneyController extends ZampayrollController
         $charge = $dpo->chargeMobile($token['token'], $msisdn, $mno, $country);
 
         if (! $charge['success']) {
-            return $this->failed($subscription, $charge['message'] ?: 'The payment prompt could not be sent to your phone.', $charge['code']);
+            // Admin email gets exactly what was sent and what DPO offered, to diagnose setup problems.
+            $detail = ($charge['message'] ?: 'The payment prompt could not be sent')
+                .($charge['code'] ? " (code {$charge['code']})" : '')
+                ." · sent MNO \"{$mno}\", country \"{$country}\" · {$offered}";
+
+            // Codes that mean the DPO account isn't set up for this network – not the customer's fault.
+            $setupProblem = in_array($charge['code'], ['956', '957', '958'], true)
+                || str_contains(strtolower($charge['message']), 'terminal');
+
+            return $this->failed(
+                $subscription,
+                $detail,
+                $charge['code'],
+                customerMessage: $setupProblem
+                    ? "{$network['label']} payments aren’t available right now. Try another network, or pay by card."
+                    : ($charge['message'] ?: 'The payment prompt could not be sent to your phone.'),
+            );
         }
 
         $subscription->update([

@@ -110,6 +110,7 @@ class DpoCheck extends Command
         $this->line('  Return URL used by the app: '.$appComplete);
 
         $blocked = [];
+        $liveToken = null;
         foreach ($variants as $label => $params) {
             try {
                 $res = $dpo->request()->withBody($dpo->createTokenXml($params), 'application/xml')->post(config('dpo.api_endpoint'));
@@ -123,6 +124,9 @@ class DpoCheck extends Command
                 [$code, $text] = $this->resultCode($res->body());
                 $this->line("  {$label}: passed the firewall · DPO result {$code} {$text}");
                 $blocked[$label] = false;
+                if ($code === '000' && ! $liveToken && preg_match('#<TransToken>([^<]+)</TransToken>#', $res->body(), $m)) {
+                    $liveToken = $m[1];
+                }
             } else {
                 $this->error("  {$label}: BLOCKED (HTTP {$res->status()}, ".($res->header('Server') ?: 'unknown server').')');
                 $blocked[$label] = true;
@@ -135,7 +139,7 @@ class DpoCheck extends Command
         if (! $a) {
             $this->info('The payment request passes DPO\'s firewall.');
 
-            return self::SUCCESS;
+            return $liveToken ? $this->mobileOptions($dpo, $liveToken) : self::SUCCESS;
         }
 
         if (! $b) {
@@ -152,6 +156,37 @@ class DpoCheck extends Command
         }
 
         return self::FAILURE;
+    }
+
+    /** List the mobile money networks DPO has enabled for this account. */
+    private function mobileOptions(DpoPay $dpo, string $token): int
+    {
+        $this->newLine();
+        $this->info('Mobile money networks enabled on your DPO account');
+
+        $options = $dpo->mobilePaymentOptions($token);
+        if ($options === []) {
+            $this->error('  None. DPO returned no mobile money options for this account.');
+            $this->line('  Ask DPO support to enable Airtel, MTN and Zamtel mobile money (Zambia) on your live account.');
+
+            return self::FAILURE;
+        }
+
+        foreach ($options as $o) {
+            $this->line("  • {$o['name']} – country \"{$o['country']}\"");
+        }
+
+        $missing = collect(config('zampayroll.mobile_networks'))
+            ->reject(fn ($n) => collect($options)->contains(fn ($o) => str_contains(strtolower($o['name']), strtolower($n['dpo_name']))))
+            ->pluck('label');
+
+        if ($missing->isNotEmpty()) {
+            $this->warn('  Not enabled: '.$missing->implode(', ').'. Customers choosing these will be asked to use another network.');
+        }
+
+        $this->line('  If a listed network still fails with "Terminal not found (956)", ask DPO support to activate its terminal.');
+
+        return self::SUCCESS;
     }
 
     /** @return array{0: string, 1: string} [code, explanation] from DPO's XML reply */

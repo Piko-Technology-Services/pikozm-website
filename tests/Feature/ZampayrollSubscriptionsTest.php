@@ -254,4 +254,19 @@ class ZampayrollSubscriptionsTest extends TestCase
             && ! str_contains($r->body(), '<customerPhone>')
             && ! str_contains($r->body(), '<customerDialCode>'));
     }
+
+    public function test_terminal_not_found_is_explained_to_admin_and_softened_for_customer(): void
+    {
+        $this->fakeDpo(chargeCode: '956');
+
+        $this->postJson('/zampayroll-subscriptions/mobile-money', $this->customer([
+            'plan' => 'tikula', 'network' => 'mtn', 'mobile_number' => '0962893773',
+        ]))->assertStatus(422)
+            ->assertJsonPath('message', 'MTN MoMo payments aren’t available right now. Try another network, or pay by card.');
+
+        $admin = ZampayrollSubscription::sole()->last_message;
+        $this->assertStringContainsString('(code 956)', $admin);
+        $this->assertStringContainsString('sent MNO "MTN", country "zambia"', $admin);
+        $this->assertStringContainsString('DPO offers: Airtel zambia, MTN zambia, Zamtel zambia', $admin);
+    }
 }
