@@ -96,14 +96,18 @@ abstract class ZampayrollController extends Controller
     {
         [$first, $last] = array_pad(explode(' ', trim($s->contact_name), 2), 2, '');
 
-        return [
+        // DPO wants the country as a 2-letter ISO code and the phone without its dial code.
+        // Non-Zambian or unrecognised numbers are left out rather than risk a "data mismatch".
+        $msisdn = \App\Support\ZambianPhone::normalize($s->phone);
+
+        return array_filter([
             'first_name' => $first,
             'last_name' => $last,
             'email' => $s->email,
-            'phone' => preg_replace('/\D+/', '', $s->phone),
-            'dial_code' => '260',
-            'country' => 'Zambia',
-        ];
+            'phone' => $msisdn ? substr($msisdn, 3) : null,
+            'dial_code' => $msisdn ? '260' : null,
+            'country' => 'ZM',
+        ]);
     }
 
     protected function serviceDescription(ZampayrollSubscription $s): string
