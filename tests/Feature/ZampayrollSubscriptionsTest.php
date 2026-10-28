@@ -91,7 +91,10 @@ class ZampayrollSubscriptionsTest extends TestCase
         Http::assertSent(fn (Request $r) => str_contains($r->body(), '<ServiceType>117535</ServiceType>')
             && str_contains($r->body(), '<PaymentAmount>799.00</PaymentAmount>')
             && str_contains($r->body(), route('zampayroll.payment.complete'))
-            && str_contains($r->body(), '<customerEmail>hr@kafueagro.co.zm</customerEmail>'));
+            && str_contains($r->body(), '<customerEmail>hr@kafueagro.co.zm</customerEmail>')
+            && str_contains($r->body(), '<customerCountry>ZM</customerCountry>')
+            && str_contains($r->body(), '<customerPhone>962000000</customerPhone>')
+            && str_contains($r->body(), '<customerDialCode>260</customerDialCode>'));
 
         $this->assertSame(ZampayrollSubscription::STATUS_AWAITING, ZampayrollSubscription::sole()->status);
     }
@@ -227,5 +230,28 @@ class ZampayrollSubscriptionsTest extends TestCase
         $this->post('/zampayroll-subscriptions/checkout/tikula', $this->customer(['payment_method' => 'card']));
 
         Http::assertSent(fn (Request $r) => $r->header('User-Agent')[0] === 'PikoPay/1.0 (+https://pikozm.com)');
+    }
+
+    public function test_callback_base_url_overrides_local_return_urls(): void
+    {
+        config(['dpo.callback_base_url' => 'https://pikozm.com']);
+        $this->fakeDpo();
+
+        $this->post('/zampayroll-subscriptions/checkout/tikula', $this->customer(['payment_method' => 'card', 'company_name' => 'Kafue “Agro” Ltd – Ndola']));
+
+        Http::assertSent(fn (Request $r) => str_contains($r->body(), '<RedirectURL>https://pikozm.com/zampayroll-subscriptions/payment/complete</RedirectURL>')
+            && str_contains($r->body(), '<BackURL>https://pikozm.com/zampayroll-subscriptions/payment/cancelled</BackURL>')
+            && str_contains($r->body(), '(Monthly) - Kafue Agro Ltd Ndola</ServiceDescription>'));
+    }
+
+    public function test_unrecognised_phone_is_not_sent_to_dpo(): void
+    {
+        $this->fakeDpo();
+
+        $this->post('/zampayroll-subscriptions/checkout/tikula', $this->customer(['payment_method' => 'card', 'phone' => '+44 20 7946 0000']));
+
+        Http::assertSent(fn (Request $r) => str_contains($r->body(), '<customerCountry>ZM</customerCountry>')
+            && ! str_contains($r->body(), '<customerPhone>')
+            && ! str_contains($r->body(), '<customerDialCode>'));
     }
 }

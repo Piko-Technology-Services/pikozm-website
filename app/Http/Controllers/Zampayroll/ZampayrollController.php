@@ -108,6 +108,9 @@ abstract class ZampayrollController extends Controller
 
     protected function serviceDescription(ZampayrollSubscription $s): string
     {
-        return "ZamPayroll {$s->plan_name} subscription ({$s->billingLabel()}) – {$s->company_name}";
+        // Plain ASCII only: unusual characters in the body can trip DPO's firewall.
+        $company = trim(preg_replace('/\s+/', ' ', preg_replace('/[^A-Za-z0-9 .,&()\'-]+/', ' ', $s->company_name)));
+
+        return "ZamPayroll {$s->plan_name} subscription ({$s->billingLabel()}) - {$company}";
     }
 }

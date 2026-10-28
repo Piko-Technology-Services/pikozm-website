@@ -27,6 +27,11 @@ return [
     // Service type used for free-form "Paying for something else?" payments.
     'default_service_type' => env('DPO_DEFAULT_SERVICE_TYPE', '85325'),
 
+    // Public https base URL used to build the return URLs sent to DPO, e.g. https://pikozm.com
+    // or an ngrok URL when testing on your Mac. DPO's firewall blocks localhost/http return URLs.
+    // Leave blank to use APP_URL / the current request.
+    'callback_base_url' => env('DPO_CALLBACK_BASE_URL'),
+
     'redirect_url' => env('DPO_REDIRECT_URL'),
     'back_url' => env('DPO_BACK_URL'),
 

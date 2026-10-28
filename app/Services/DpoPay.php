@@ -27,6 +27,29 @@ class DpoPay
      */
     public function createToken(array $params): array
     {
+        $data = $this->send($this->createTokenXml($params));
+
+        if (! $data instanceof SimpleXMLElement) {
+            return ['success' => false, 'message' => $data];
+        }
+
+        if ((string) $data->Result === '000') {
+            return [
+                'success' => true,
+                'token' => (string) $data->TransToken,
+                'trans_ref' => (string) $data->TransRef,
+            ];
+        }
+
+        return [
+            'success' => false,
+            'message' => (string) $data->ResultExplanation ?: 'Unable to create payment token.',
+        ];
+    }
+
+    /** The createToken XML exactly as it is sent to DPO (also used by "php artisan dpo:check"). */
+    public function createTokenXml(array $params): string
+    {
         $amount = number_format((float) $params['amount'], 2, '.', '');
         $currency = $this->xml($params['currency'] ?? $this->config['currency']);
         $companyRef = $this->xml($params['company_ref']);
@@ -34,8 +57,8 @@ class DpoPay
         $serviceDescription = $this->xml($params['service_description']);
         $serviceDate = now()->format('Y/m/d H:i');
         $token = $this->xml((string) $this->config['company_token']);
-        $redirectUrl = $this->xml($params['redirect_url'] ?? ($this->config['redirect_url'] ?: route('payments.success')));
-        $backUrl = $this->xml($params['back_url'] ?? ($this->config['back_url'] ?: route('payments.cancel')));
+        $redirectUrl = $this->xml($params['redirect_url'] ?? ($this->config['redirect_url'] ?: $this->callbackUrl('payments.success')));
+        $backUrl = $this->xml($params['back_url'] ?? ($this->config['back_url'] ?: $this->callbackUrl('payments.cancel')));
         $customer = $this->customerXml($params['customer'] ?? []);
 
         $xml = <<<XML
@@ -62,24 +85,34 @@ class DpoPay
 </API3G>
 XML;
 
-        $data = $this->send($xml);
+        return $xml;
+    }
 
-        if (! $data instanceof SimpleXMLElement) {
-            return ['success' => false, 'message' => $data];
-        }
+    /**
+     * Absolute URL DPO sends the customer back to after paying.
+     *
+     * DPO sits behind an AWS CloudFront firewall that rejects (HTTP 403) payment requests
+     * whose return URLs point at localhost, raw IPs or plain http. Set DPO_CALLBACK_BASE_URL
+     * to a public https address (your live domain, or an ngrok tunnel when testing locally).
+     */
+    public function callbackUrl(string $routeName, array $parameters = []): string
+    {
+        $base = $this->config['callback_base_url'] ?? null;
 
-        if ((string) $data->Result === '000') {
-            return [
-                'success' => true,
-                'token' => (string) $data->TransToken,
-                'trans_ref' => (string) $data->TransRef,
-            ];
-        }
+        return $base
+            ? rtrim($base, '/').route($routeName, $parameters, false)
+            : route($routeName, $parameters);
+    }
 
-        return [
-            'success' => false,
-            'message' => (string) $data->ResultExplanation ?: 'Unable to create payment token.',
-        ];
+    /** True when callback URLs would point somewhere DPO's firewall is likely to block. */
+    public function callbackUrlLooksLocal(string $url): bool
+    {
+        $host = (string) parse_url($url, PHP_URL_HOST);
+
+        return ! str_starts_with($url, 'https://')
+            || in_array($host, ['localhost', '127.0.0.1', '::1'], true)
+            || str_ends_with($host, '.test') || str_ends_with($host, '.local')
+            || filter_var($host, FILTER_VALIDATE_IP) !== false;
     }
 
     /**

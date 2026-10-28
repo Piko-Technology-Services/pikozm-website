@@ -77,8 +77,8 @@ class CheckoutController extends ZampayrollController
             'company_ref' => $subscription->reference,
             'service_type' => config('zampayroll.dpo_service_type'),
             'service_description' => $this->serviceDescription($subscription),
-            'redirect_url' => route('zampayroll.payment.complete'),
-            'back_url' => route('zampayroll.payment.cancelled'),
+            'redirect_url' => $dpo->callbackUrl('zampayroll.payment.complete'),
+            'back_url' => $dpo->callbackUrl('zampayroll.payment.cancelled'),
             'customer' => $this->dpoCustomer($subscription),
         ]);
 
