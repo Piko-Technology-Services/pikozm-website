@@ -15,6 +15,10 @@ use App\Http\Controllers\Payments\DpoCallbackController;
 use App\Http\Controllers\PikoPayController;
 use App\Http\Controllers\PromoController;
 use App\Http\Controllers\TalentController;
+use App\Http\Controllers\Zampayroll\CheckoutController as ZampayrollCheckoutController;
+use App\Http\Controllers\Zampayroll\MobileMoneyController;
+use App\Http\Controllers\Zampayroll\PaymentReturnController;
+use App\Http\Controllers\Zampayroll\PricingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -75,6 +79,22 @@ Route::prefix('payments')->name('payments.')->group(function () {
 Route::get('/pikopay', [PikoPayController::class, 'index'])->name('pikopay.index');
 Route::post('/pikopay/initiate', [PikoPayController::class, 'initiate'])->middleware('throttle:forms')->name('pikopay.initiate');
 Route::post('/pikopay/verify', [PikoPayController::class, 'verify'])->middleware('throttle:forms')->name('pikopay.verify');
+
+/*
+|--------------------------------------------------------------------------
+| ZamPayroll subscriptions – card (DPO hosted), mobile money (in-page), manual
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('zampayroll-subscriptions')->name('zampayroll.')->group(function () {
+    Route::get('/', PricingController::class)->name('pricing');
+    Route::get('/checkout/{plan}', [ZampayrollCheckoutController::class, 'show'])->name('checkout');
+    Route::post('/checkout/{plan}', [ZampayrollCheckoutController::class, 'store'])->middleware('throttle:forms')->name('checkout.store');
+    Route::post('/mobile-money', [MobileMoneyController::class, 'start'])->middleware('throttle:forms')->name('mobile.start');
+    Route::get('/mobile-money/{subscription}', [MobileMoneyController::class, 'status'])->middleware('throttle:60,1')->name('mobile.status');
+    Route::get('/payment/complete', [PaymentReturnController::class, 'complete'])->name('payment.complete');
+    Route::get('/payment/cancelled', [PaymentReturnController::class, 'cancelled'])->name('payment.cancelled');
+});
 
 Route::post('/webhooks/lenco', LencoWebhookController::class)->name('webhooks.lenco');
 

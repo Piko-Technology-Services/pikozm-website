@@ -32,4 +32,7 @@ return [
 
     'timeout' => 30,
 
+    // Sent with every DPO API call. Avoid the default "GuzzleHttp" agent, which DPO's firewall may block.
+    'user_agent' => env('DPO_USER_AGENT', 'PikoPay/1.0 (+https://pikozm.com)'),
+
 ];

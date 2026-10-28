@@ -12,6 +12,7 @@ PHP module with one app that has controllers, models, routes, Blade layouts and 
 | Payments (DPO Pay) | `/payments` | Catalog of subscriptions and one-off services, plus "Paying for something else?". Checkout creates an `Order`, gets a DPO token and redirects to DPO. DPO sends the customer back to `/payments/success` or `/payments/cancel` |
 | PikoPay (Lenco) | `/pikopay` | Free-form client payments through the Lenco inline widget |
 | Digital Impact (PDIP) | `/digital-impact` | Donations (Lenco), partnership requests, volunteer sign-ups with ID and CV upload, NGO support requests |
+| ZamPayroll subscriptions | `/zampayroll-subscriptions` | ZamPayroll plans and pricing. Customers choose a plan, enter their company details and pay by **card** (DPO hosted checkout), **mobile money** (Airtel, MTN or Zamtel prompt approved in-page, with retry), or **manual** payment (sent to zampayroll.com/login). Each outcome is emailed to `ZAMPAYROLL_ADMIN_EMAIL` |
 | Talent | `/talent` | "Join Our Team" registration, saved and then opened in WhatsApp |
 | Promo | `/promo` | Business Booster packages and registration, saved and then opened in WhatsApp |
 
@@ -85,6 +86,14 @@ DB_PASSWORD=
 | `DPO_REDIRECT_URL` / `DPO_BACK_URL` | Leave blank. The app sends DPO its own `/payments/success` and `/payments/cancel` URLs |
 | `DPO_DEFAULT_SERVICE_TYPE` | Service type for free-form payments (85325 = DPO test service) |
 | `LENCO_PUBLIC_KEY` / `LENCO_SECRET_KEY` | Required for PikoPay and donations. Without them those forms return "not available right now" |
+
+| `DPO_ZAMPAYROLL_SERVICE_TYPE` | DPO service type for ZamPayroll subscriptions: `117535` (Web Hosting & Management) |
+| `ZAMPAYROLL_ADMIN_EMAIL` | Receives the ZamPayroll payment emails (paid, failed, cancelled, manual). Defaults to bupe@pikozm.com |
+| `MAIL_*` | **Set real SMTP details.** The default `MAIL_MAILER=log` only writes emails to `storage/logs` |
+
+ZamPayroll plans, prices and mobile networks are in `config/zampayroll.php`. Mobile money uses DPO's
+`GetMobilePaymentOptions` → `ChargeTokenMobile` → `verifyToken` (polled every 4–5 s for up to 3 minutes).
+It needs mobile money to be enabled on your DPO account for Zambia.
 
 Product prices and DPO service type codes are in `database/seeders/ProductSeeder.php`.
 Re-running `php artisan db:seed --class=ProductSeeder` updates rows in place, matched by slug.
