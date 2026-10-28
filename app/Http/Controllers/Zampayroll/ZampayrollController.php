@@ -96,7 +96,7 @@ abstract class ZampayrollController extends Controller
     {
         [$first, $last] = array_pad(explode(' ', trim($s->contact_name), 2), 2, '');
 
-        // DPO wants the country as a 2-letter ISO code and the phone without its dial code.
+        // DPO wants the country and dial code as 2-letter ISO codes (ZM) and the phone without 260.
         // Non-Zambian or unrecognised numbers are left out rather than risk a "data mismatch".
         $msisdn = \App\Support\ZambianPhone::normalize($s->phone);
 
@@ -105,7 +105,7 @@ abstract class ZampayrollController extends Controller
             'last_name' => $last,
             'email' => $s->email,
             'phone' => $msisdn ? substr($msisdn, 3) : null,
-            'dial_code' => $msisdn ? '260' : null,
+            'dial_code' => $msisdn ? 'ZM' : null, // DPO expects the ISO country code here, not "260"
             'country' => 'ZM',
         ]);
     }

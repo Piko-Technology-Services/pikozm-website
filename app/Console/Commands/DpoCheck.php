@@ -97,7 +97,7 @@ class DpoCheck extends Command
             'service_description' => 'ZamPayroll Tikula subscription (Monthly) - Connection test',
         ];
         $customer = ['first_name' => 'Test', 'last_name' => 'Customer', 'email' => config('zampayroll.admin_email'),
-            'phone' => '970000000', 'dial_code' => '260', 'country' => 'ZM'];
+            'phone' => '970000000', 'dial_code' => 'ZM', 'country' => 'ZM'];
 
         $variants = [
             'A. As the app sends it' => $base + ['redirect_url' => $appComplete, 'back_url' => $appCancel, 'customer' => $customer],

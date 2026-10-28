@@ -94,7 +94,7 @@ class ZampayrollSubscriptionsTest extends TestCase
             && str_contains($r->body(), '<customerEmail>hr@kafueagro.co.zm</customerEmail>')
             && str_contains($r->body(), '<customerCountry>ZM</customerCountry>')
             && str_contains($r->body(), '<customerPhone>962000000</customerPhone>')
-            && str_contains($r->body(), '<customerDialCode>260</customerDialCode>'));
+            && str_contains($r->body(), '<customerDialCode>ZM</customerDialCode>'));
 
         $this->assertSame(ZampayrollSubscription::STATUS_AWAITING, ZampayrollSubscription::sole()->status);
     }
